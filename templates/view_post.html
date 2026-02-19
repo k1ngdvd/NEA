@@ -1,0 +1,108 @@
+{% extends "base_page.html" %}
+
+{% block head %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studsight - View Post</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='view_post.css') }}">
+{% endblock %}
+
+{% block body %}
+<section class="vp-page">
+  <div class="vp-header">
+    <div class="back">
+      <a href="{{ url_for('message_page', board=board) }}">Back</a>
+    </div>
+  </div>
+
+  <div class="vp-container">
+
+    <!-- POST -->
+    <article class="vp-post">
+      <div class="vp-post-top">
+        <h1 class="vp-post-title">{{ post[1] }}</h1>
+        <div class="vp-post-meta">
+          <span><b>Date:</b> {{ post[3] }}</span>
+          <span class="vp-dot">•</span>
+          <span><b>Time:</b> {{ post[4] }}</span>
+            {% for teacher in teachers %}
+              {% if post[7]|int == teacher[0]|int %}
+                <span class="vp-dot">•</span>
+                <span><b>Posted by:</b> {{ teacher[1] }} {{ teacher[2] }}</span>
+              {% endif %}
+            {% endfor %}
+        </div>
+      </div>
+
+      {% if post[5] %}
+      <div class="vp-post-media">
+        <img src="{{ url_for('get_attachment', board=board, post_id=post[0]) }}" alt="Post attachment">
+      </div>
+      {% endif %}
+
+      <div class="vp-post-body">{{ post[2] }}</div>
+    </article>
+
+    <!-- REPLIES -->
+    <section class="vp-replies">
+      <div class="vp-replies-head">
+        <div class="vp-pill vp-pill-replies">REPLIES</div>
+        <div class="vp-badge">{% if replies %}{{ replies|length }}{% else %}0{% endif %}</div>
+      </div>
+
+      <!-- Composer -->
+      <form method="POST"
+            action="{{ url_for('add_reply', board=board, post_id=post[0]) }}"
+            class="vp-composer">
+        <label class="vp-composer-label">Write a reply</label>
+        <textarea name="reply_content" placeholder="Type here..." required></textarea>
+        <div class="vp-composer-actions">
+          <button type="submit" class="vp-btn">Post reply</button>
+        </div>
+      </form>
+
+      <!-- Replies list -->
+      <div class="vp-list" id="replies-list">
+        {% if replies and replies|length > 0 %}
+          {% for reply in replies %}
+            <article class="vp-reply">
+              <div class="vp-reply-head">
+                <div class="vp-avatar">
+                  {% if reply[6] %}{{ reply[6][0] }}{% elif reply[7] %}{{ reply[7][0] }}{% else %}?{% endif %}
+                </div>
+
+                <div class="vp-reply-info">
+                  <div class="vp-author">
+                    {% if reply[6] %}{{ reply[6] }} {{ reply[7] }}{% else %}Unknown{% endif %}
+                  </div>
+                  <div class="vp-time">{{ reply[3] }} • {{ reply[4] }}</div>
+                </div>
+
+                {% if reply[5] == id %}
+                <form method="POST"
+                      action="{{ url_for('delete_reply', board=board, post_id=reply[1], reply_id=reply[0]) }}"
+                      onsubmit="return confirm('Delete this reply?');"
+                      class="vp-del-form">
+                  <button type="submit" class="vp-del">Delete</button>
+                </form>
+                {% endif %}
+              </div>
+
+              <div class="vp-reply-body">{{ reply[2] }}</div>
+            </article>
+          {% endfor %}
+        {% else %}
+          <div class="vp-empty">No replies yet. Be the first to reply.</div>
+        {% endif %}
+      </div>
+    </section>
+
+  </div>
+</section>
+
+<script src="{{ url_for('static', filename='reply.js') }}"></script>
+<script>
+  if (typeof initReplies === 'function'){
+      initReplies("{{ board }}", {{ post[0] }}, {{ id }});
+  }
+</script>
+{% endblock %}

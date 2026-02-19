@@ -1,0 +1,186 @@
+{% extends "base_page.html" %}
+
+{% block head %}
+    <title>Studsight - Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='analyse.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block body %}
+    <!-- Top bar -->
+    <div class="menu-bar">
+        <div class="back">
+            <a href="{{ url_for('view_student', student_id=student[0]) }}">Back</a>
+        </div>
+        <h1>Student Analysis</h1>
+    </div>
+
+    <!-- Page layout -->
+    <div class="page">
+
+        <!-- Student card -->
+        <section class="card student-card">
+            <div class="student-left">
+                <img src="{{ url_for('static', filename='Profile.png') }}" alt="Student Photo" class="student-photo">
+            </div>
+
+            <div class="student-right">
+                <h2 class="student-name">{{ student[1] }} {{ student[2] }}</h2>
+
+                <!-- If you still want "Detentions Today", make sure your route sends a variable called detentions_today -->
+                <p class="student-sub">
+                    Student ID: <span class="pill">{{ student[0]}}</span>
+                </p>
+
+                <div class="actions">
+                    <a class="btn" href="{{ url_for('log_behaviour', student_id=student[0]) }}">Log Behaviour</a>
+                </div>
+            </div>
+        </section>
+
+       
+        <section class="card">
+            <div class="card-header">
+                <h3>House Points</h3>
+                <p>Previous week vs current week</p>
+            </div>
+
+            <div class="chart-wrap">
+                <canvas id="housePointsChart"></canvas>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-label">Previous Week</span>
+                    <span class="stat-value">{{ prev_hp }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Current Week</span>
+                    <span class="stat-value">{{ curr_hp }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Change</span>
+                    <span class="stat-value">{{ curr_hp - prev_hp }}</span>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="card">
+            <div class="card-header">
+                <h3>Detentions</h3>
+                <p>Previous week vs current week</p>
+            </div>
+
+            <div class="chart-wrap">
+                <canvas id="detentionsChart"></canvas>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-label">Previous Week</span>
+                    <span class="stat-value">{{ prev_detentions }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Current Week</span>
+                    <span class="stat-value">{{ curr_detentions }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Change</span>
+                    <span class="stat-value">{{ curr_detentions - prev_detentions }}</span>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="card">
+            <div class="card-header">
+                <h3>Withdrawals</h3>
+                <p>Previous week vs current week</p>
+            </div>
+
+            <div class="chart-wrap">
+                <canvas id="withdrawalsChart"></canvas>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-label">Previous Week</span>
+                    <span class="stat-value">{{ prev_wd }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Current Week</span>
+                    <span class="stat-value">{{ curr_wd }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Change</span>
+                    <span class="stat-value">{{ curr_wd - prev_wd }}</span>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="card">
+            <div class="card-header">
+                <h3>Attendance</h3>
+                <p>Previous week vs current week</p>
+            </div>
+
+            <div class="chart-wrap">
+                <canvas id="attendanceChart"></canvas>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-label">This Week Present</span>
+                    <span class="stat-value">{{ curr_present }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">This Week Absent</span>
+                    <span class="stat-value">{{ curr_absent }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">This Week Late</span>
+                    <span class="stat-value">{{ curr_late }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Last Week Present</span>
+                    <span class="stat-value">{{ prev_present }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Last Week Absent</span>
+                    <span class="stat-value">{{ prev_absent }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Last Week Late</span>
+                    <span class="stat-value">{{ prev_late }}</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        window.chartData = {
+            prevHP: {{ prev_hp }},
+            currHP: {{ curr_hp }},
+            prevDet: {{ prev_detentions }},
+            currDet: {{ curr_detentions }},
+            prevWd: {{ prev_wd }},
+            currWd: {{ curr_wd }},
+            prevPresent: {{ prev_present }},
+            currPresent: {{ curr_present }},
+            prevAbsent: {{ prev_absent }},
+            currAbsent: {{ curr_absent }},
+            prevLate: {{ prev_late }},
+            currLate: {{ curr_late }}
+        };
+    </script>
+
+    <!-- Load external JavaScript for chart initialization -->
+    <script src="{{ url_for('static', filename='analyse.js') }}"></script>
+    
+    <!-- Initialize charts after script is loaded -->
+    <script>
+        initializeCharts();
+    </script>
+{% endblock %}

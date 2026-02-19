@@ -1,0 +1,360 @@
+/* view_post.css
+   Polished UI for View Post page.
+   DOES NOT change base page background or base back button styling.
+*/
+
+:root{
+  --card: #ffffff;
+  --card-soft: #fafafa;
+  --head: #f2f2f2;
+
+  --ink: #0f0f0f;
+  --muted: #5a5a5a;
+
+  --line: rgba(0,0,0,0.18);
+  --line-soft: rgba(0,0,0,0.12);
+
+  --shadow: 0 10px 26px rgba(0,0,0,0.14);
+
+  --pill: #262525;
+  --pill2: #3a3a3a;
+
+  --danger: #b00000;
+}
+
+/* ===== Page layout ===== */
+.vp-page{
+  padding: 18px 16px 30px;
+}
+
+/* Centered content area (post + replies) */
+.vp-container{
+  max-width: 920px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+/* ===== Small section label ===== */
+.vp-pill{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--pill);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.75rem;
+  letter-spacing: 0.6px;
+}
+
+.vp-pill-replies{
+  background: var(--pill2);
+}
+
+.vp-dot{
+  opacity: 0.6;
+}
+
+/* ===== POST CARD ===== */
+.vp-post{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.vp-post-top{
+  padding: 16px 18px;
+  background: linear-gradient(180deg, #f2f2f2 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.vp-post-title{
+  margin: 8px 0 6px;
+  color: var(--ink);
+  font-size: 1.45rem;
+  line-height: 1.2;
+  font-weight: 900;
+}
+
+.vp-post-meta{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* attachment */
+.vp-post-media{
+  padding: 14px 18px 0;
+}
+
+.vp-post-media img{
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  display: block;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+/* post body */
+.vp-post-body{
+  padding: 14px 18px 18px;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ===== REPLIES CARD ===== */
+.vp-replies{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.vp-replies-head{
+  padding: 14px 18px;
+  background: var(--head);
+  border-bottom: 1px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vp-replies-title{
+  font-weight: 900;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.vp-badge{
+  margin-left: auto;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #e7e7e7;
+  border: 1px solid rgba(0,0,0,0.12);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+/* ===== Reply composer ===== */
+.vp-composer{
+  padding: 14px 18px;
+  background: var(--card-soft);
+  border-bottom: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vp-composer-label{
+  font-weight: 900;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.vp-composer textarea{
+  width: 100%;
+  min-height: 110px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.30);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  resize: vertical;
+  background: #ffffff;
+}
+
+.vp-composer textarea::placeholder{
+  color: #8a8a8a;
+}
+
+.vp-composer textarea:focus{
+  outline: none;
+  border-color: #262525;
+}
+
+.vp-composer-actions{
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Composer button */
+.vp-btn{
+  background: #262525;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.vp-btn:hover{
+  background: #000;
+}
+
+/* ===== Replies list ===== */
+.vp-list{
+  padding: 14px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Reply card */
+.vp-reply{
+  border: 1px solid rgba(0,0,0,0.16);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Reply header */
+.vp-reply-head{
+  padding: 10px 12px;
+  background: #f3f3f3;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* avatar */
+.vp-avatar{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #262525;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+.vp-reply-info{
+  min-width: 0;
+  flex: 1;
+}
+
+.vp-author{
+  font-weight: 800;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vp-time{
+  margin-top: 2px;
+  font-size: 0.82rem;
+  color: #555;
+}
+
+/* reply text */
+.vp-reply-body{
+  padding: 12px 14px 14px;
+  color: #111;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Delete button (nice) */
+.vp-del-form{
+  flex: 0 0 auto;
+}
+
+.vp-del{
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid rgba(176,0,0,0.40);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vp-del:hover{
+  background: var(--danger);
+  color: #fff;
+}
+
+/* Empty state */
+.vp-empty{
+  background: #f2f2f2;
+  border: 1px dashed rgba(0,0,0,0.25);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  font-weight: 900;
+  color: #222;
+}
+
+/* Mobile */
+@media (max-width: 600px){
+  .vp-btn{
+    width: 100%;
+  }
+  .vp-del{
+    width: 100%;
+  }
+  .vp-replies-head{
+    flex-wrap: wrap;
+  }
+}
+
+
+.vp-del:disabled{
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* Force the reply textarea to look normal (overrides old reply.css/global textarea styles) */
+.vp-composer textarea{
+  display: block;
+  width: 100%;
+  min-height: 130px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(0,0,0,0.28);
+  border-radius: 14px;
+
+  background: #fff;
+  color: #111;
+
+  font-size: 16px;
+  line-height: 1.5;
+
+  outline: none;
+  box-shadow: none !important;   /* kills any shadow */
+  appearance: none;
+}
+
+.vp-composer textarea:focus{
+  border-color: #262525;
+}
+
+/* Optional: make placeholder not look “floating” */
+.vp-composer textarea::placeholder{
+  color: #7a7a7a;
+}

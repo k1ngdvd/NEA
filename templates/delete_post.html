@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Post - {{ board | title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='delete_post.css') }}">
+</head>
+<body>
+    {% include 'base_page.html' %}
+    
+    <main class="container">
+        <div class="delete-post-wrapper">
+            <section class="delete-post-header">
+                <h1>Delete Post — {{ board | title }} Board</h1>
+                <p class="subtitle">Select a post to delete. Only your own posts can be deleted (admins can delete any post).</p>
+            </section>
+
+            {% if myposts %}
+                <form method="POST" class="delete-post-form">
+                    <div class="posts-list">
+                        {% for post in myposts %}
+                            <div class="post-card">
+                                <input type="radio" id="post-{{ post[0] }}" name="post_id" value="{{ post[0] }}" required>
+                                <label for="post-{{ post[0] }}" class="post-label">
+                                    <div class="post-checkbox">
+                                        <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="post-content">
+                                        <h3 class="post-title">{{ post[1] if post[1] else 'Untitled' }}</h3>
+                                        <div class="post-details">
+                                            <span class="post-time">{{ post[4] if post[4] else 'No time' }}</span>
+                                            {% for teacher in teachers %}
+                                                {% if post[7]|int == teacher[0]|int %}
+                                                    <span class="post-teacher">by {{ teacher[1] }} {{ teacher[2] }}</span>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <p class="post-preview">{{ post[2][:80] if post[2] else 'No content' }}{% if post[2] and post[2]|length > 80 %}...{% endif %}</p>
+                                    </div>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-danger">Delete Selected Post</button>
+                        <a href="{{ url_for('message_page') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            {% else %}
+                <div class="alert alert-info">
+                    <p><strong>No posts found.</strong> {% if role != 'A' %}You haven't created any posts on the {{ board | title }} board yet.{% else %}No posts exist on the {{ board | title }} board.{% endif %}</p>
+                </div>
+                <a href="{{ url_for('message_page') }}" class="btn btn-secondary">Back</a>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>
