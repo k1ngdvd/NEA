@@ -182,7 +182,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS H_Replies
                FOREIGN KEY(TeacherID) REFERENCES Teachers(TeacherID))''')
 
 
-cursor.execute("INSERT INTO Teachers (Firstname, Surname, Gender, Email, Role, SubjectID, MasteryID) VALUES ('David', 'Akeredolu', 'M', 'akeredolud@mercia.school', 'A', 2, '')")
+cursor.execute("INSERT INTO Teachers (Firstname, Surname, Gender, Email, Role, SubjectID, MasteryID) VALUES ('David', 'Akeredolu', 'M', 'akeredolud@mercia.school', 'A', 2, 3)")
 cursor.execute("INSERT INTO Teacher_info (TeacherID, phonenumber, personal_email, DOB, qualifications, Emergency_contact, Address, employment_start) VALUES (1, 0123456789, 'davidakeredolu@gmail.com', '1985-06-15', 'MSc  Mechatronics Engineering, PGCE', '07777777777', '123 Meridian Street, London', '2020-09-01')")
 
 
