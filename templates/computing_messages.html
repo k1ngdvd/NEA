@@ -34,7 +34,7 @@
                     <h2>{{ post[1] }}</h2>
 
                     {% for teacher in teachers %}
-                        {% if post[7]|int == teacher[0]|int %}
+                        {% if post[6]|int == teacher[0]|int %}
                             <p><strong>Posted by:</strong> {{ teacher[1] }} {{ teacher[2] }}</p>
                         {% endif %}
                     {% endfor %}

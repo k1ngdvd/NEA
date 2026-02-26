@@ -34,7 +34,7 @@
                                         <div class="post-details">
                                             <span class="post-time">{{ post[4] if post[4] else 'No time' }}</span>
                                             {% for teacher in teachers %}
-                                                {% if post[7]|int == teacher[0]|int %}
+                                                {% if post[6]|int == teacher[0]|int %}
                                                     <span class="post-teacher">by {{ teacher[1] }} {{ teacher[2] }}</span>
                                                 {% endif %}
                                             {% endfor %}

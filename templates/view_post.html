@@ -25,7 +25,7 @@
           <span class="vp-dot">•</span>
           <span><b>Time:</b> {{ post[4] }}</span>
             {% for teacher in teachers %}
-              {% if post[7]|int == teacher[0]|int %}
+              {% if post[6]|int == teacher[0]|int %}
                 <span class="vp-dot">•</span>
                 <span><b>Posted by:</b> {{ teacher[1] }} {{ teacher[2] }}</span>
               {% endif %}

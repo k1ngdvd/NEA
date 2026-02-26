@@ -351,26 +351,19 @@ def home():
 def register():
     session.pop('user', None)  # Ensure user not already logged in
     
-    # Generate PIN only once per session
-    if 'registration_pin' not in session:
-        conn = sqlite3.connect('accounts.db')
-        cursor = conn.cursor()
-
-        all_pins = cursor.execute("SELECT pin FROM users").fetchall()
-        pins = [p[0] for p in all_pins]
+    # Generate fresh unique PIN for GET requests (new registration page)
+    conn = sqlite3.connect('accounts.db')
+    cursor = conn.cursor()
+    all_pins = cursor.execute("SELECT pin FROM users").fetchall()
+    pins = [p[0] for p in all_pins]
+    pin = generate_pin()
+    while pin in pins:
         pin = generate_pin()
-        while pin in pins:
-            pin = generate_pin()
-        
-        session['registration_pin'] = pin
-        conn.close()
-    else:
-        pin = session['registration_pin']
-
-
+    conn.close()
+    
     if request.method == 'POST':
         email = request.form.get('email').lower().strip()
-        pin = session.get('registration_pin')  # Use the PIN from session
+        pin = request.form.get('pin')  # Get the PIN from the form field
         
         conn = sqlite3.connect('accounts.db')
         cursor = conn.cursor()
